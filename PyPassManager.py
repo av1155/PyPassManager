@@ -173,7 +173,7 @@ def edit_password(passwords_encrypted_file_path, fernet):
 
 
 # Define a function to delete a password
-def delete_password(passwords_encrypted_file_path, fernet):
+def delete_password(passwords_encrypted_file_path):
     try:
         # Prompt the user for the website of the password they want to delete
         website = input(
@@ -270,30 +270,41 @@ def main():
                 )
                 continue
 
-        # Prompt the user for the program mode
-        program_mode = input(
-            f"{colorama.Fore.BLUE}{colorama.Style.BRIGHT}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> "
-        ).lower()
+                # Display the menu with numbered options
+        print(
+            f"{colorama.Fore.BLUE}{colorama.Style.BRIGHT}"
+            "\nPlease select an option by entering the corresponding number:\n"
+            "1) View passwords\n"
+            "2) Add a password\n"
+            "3) Edit a password\n"
+            "4) Delete a password\n"
+            "5) Exit\n"
+            f"{colorama.Style.RESET_ALL}"
+        )
 
-        # Determine which mode the user has selected and call the appropriate function
-        if program_mode == "view":
+        # Prompt the user for their choice
+        try:
+            choice = int(input("> "))
+        except ValueError:
+            print(
+                f"{colorama.Fore.RED}Invalid input. Please enter a number.{colorama.Style.RESET_ALL}"
+            )
+            continue
+
+        # Execute the appropriate function based on the user's choice
+        if choice == 1:
             view_passwords(passwords_encrypted_file_path, fernet)
-
-        elif program_mode == "add":
+        elif choice == 2:
             add_password(passwords_encrypted_file_path, fernet)
-
-        elif program_mode == "edit":
+        elif choice == 3:
             edit_password(passwords_encrypted_file_path, fernet)
-
-        elif program_mode == "delete":
-            delete_password(passwords_encrypted_file_path, fernet)
-
-        elif program_mode == "exit":
+        elif choice == 4:
+            delete_password(passwords_encrypted_file_path)
+        elif choice == 5:
             exit_program()
-
         else:
             print(
-                f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Invalid input. Please try again.{colorama.Style.RESET_ALL}"
+                f"{colorama.Fore.RED}Invalid choice. Please try again.{colorama.Style.RESET_ALL}"
             )
 
 
